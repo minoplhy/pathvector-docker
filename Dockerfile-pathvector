@@ -1,0 +1,27 @@
+FROM golang:alpine as builder
+
+WORKDIR /workspace
+
+RUN apk add go \
+    keepalived \
+    git
+    
+RUN git clone https://github.com/natesales/pathvector
+
+WORKDIR /workspace/pathvector
+
+RUN git checkout v6.3.2
+RUN go build
+
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /workspace/pathvector/pathvector /app/
+
+COPY ./crontab /etc/cron.d/pathvector-cron
+RUN chmod 0644 /etc/cron.d/pathvector-cron
+
+RUN touch /var/log/cron.log
+
+# CMD ["/app/pathvector"]
