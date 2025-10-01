@@ -25,3 +25,8 @@ RUN make
 RUN make install
 
 EXPOSE 179/tcp
+
+VOLUME /etc/bird
+VOLUME /run
+
+CMD ["bird", "-f", "-R"]
