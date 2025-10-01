@@ -1,0 +1,24 @@
+services:
+  bird:
+    image: ghcr.io/minoplhy/pathvector-docker:dev-bird
+    container_name: Bird
+    restart: unless-stopped
+    volumes:
+      - ./bird:/etc/bird
+      - ./rundir:/run:z
+      - ./bird_bin:/usr/sbin
+    network_mode: host
+
+  pathvector:
+    image: ghcr.io/minoplhy/pathvector-docker:dev-pathvector
+    container_name: pathvector
+    restart: unless-stopped
+    environment:
+      - KNOT_SOCKET=/rundir/knot/knot.sock
+    volumes:
+      - ./rundir:/rundir:z     # knot.sock will be here
+      - ./bird_bin:/usr/sbin
+      - ./bird:/etc/bird
+      - ./pathvector.yaml:/etc/pathvector.yml
+    depends_on:
+      - bird
