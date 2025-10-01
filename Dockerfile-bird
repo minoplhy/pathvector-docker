@@ -32,7 +32,7 @@ WORKDIR /workspace/pathvector
 
 RUN git checkout v6.3.2
 RUN go build
-COPY /workspace/pathvector/pathvector /usr/bin/pathvector
+#COPY /workspace/pathvector/pathvector /usr/bin/pathvector
 
 EXPOSE 179/tcp
 
