@@ -29,10 +29,10 @@ RUN apk add \
 	git \
 	bash
 
-WORKDIR /workspace
+WORKDIR /app
 RUN git clone https://github.com/CZ-NIC/bird
 
-WORKDIR /workspace/bird
+WORKDIR /app/bird
 RUN git checkout v3.1.4
 RUN autoreconf
 RUN ./configure --prefix=/usr --sysconfdir=/etc/bird --runstatedir=/run
