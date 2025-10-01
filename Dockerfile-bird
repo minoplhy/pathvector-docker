@@ -12,7 +12,8 @@ RUN apk add \
 	libssh-dev \
     linux-headers
 RUN apk add \
-	git
+	git \
+	bash
 
 WORKDIR /workspace
 RUN git clone https://github.com/CZ-NIC/bird
